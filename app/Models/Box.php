@@ -20,4 +20,9 @@ class Box extends Model
     {
         return $this->hasMany(Bantex::class, 'id_box');
     }
+
+    public function peminjaman()
+    {
+        return $this->belongsToMany(Peminjaman::class, 'peminjaman_box', 'id_box', 'id_peminjaman')->withTimestamps();
+    }
 }

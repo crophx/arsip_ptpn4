@@ -53,6 +53,12 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/pengisian/bantex/{bantex}', [PengisianController::class, 'destroyBantex'])->name('pengisian.bantex.destroy');
         Route::post('/pengisian/dokumen/{bantex}', [PengisianController::class, 'storeDokumen'])->name('pengisian.dokumen.store');
         Route::delete('/pengisian/dokumen/{dokumen}', [PengisianController::class, 'destroyDokumen'])->name('pengisian.dokumen.destroy');
+
+        // Peminjaman Box
+        Route::get('/peminjaman', [\App\Http\Controllers\PeminjamanController::class, 'index'])->name('peminjaman.index');
+        Route::get('/peminjaman/buat', [\App\Http\Controllers\PeminjamanController::class, 'create'])->name('peminjaman.create');
+        Route::post('/peminjaman', [\App\Http\Controllers\PeminjamanController::class, 'store'])->name('peminjaman.store');
+        Route::get('/peminjaman/{peminjaman}', [\App\Http\Controllers\PeminjamanController::class, 'show'])->name('peminjaman.show');
     });
 
     // ============================================================
@@ -60,8 +66,10 @@ Route::middleware(['auth'])->group(function () {
     // ============================================================
     Route::middleware(['role:Administrator'])->group(function () {
 
-        // Approval Pengajuan
+        // Approval Pengajuan & Peminjaman
         Route::post('/pengajuan/{pengajuan}/approval', [PengajuanController::class, 'approval'])->name('pengajuan.approval');
+        Route::post('/peminjaman/{peminjaman}/approval', [\App\Http\Controllers\PeminjamanController::class, 'approval'])->name('peminjaman.approval');
+        Route::post('/peminjaman/{peminjaman}/kembalikan', [\App\Http\Controllers\PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
 
         // Manajemen Pengiriman Box
         Route::get('/pengiriman', [PengirimanController::class, 'index'])->name('pengiriman.index');
